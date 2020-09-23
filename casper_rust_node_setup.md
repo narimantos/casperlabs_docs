@@ -1,12 +1,15 @@
 # Requirements
 
 - Ubuntu 20.04
+- To use on Ubuntu 18.04 you MUST update cmake to at least 3.16.3-1ubuntu1 
 
 # Install required packages
-    
-    sudo apt install  git curl unattended-upgrades rkhunter fail2ban iperf htop iotop screen lynis nmap jq apt-transport-https ca-certificates gnupg-agent software-properties-common python3 python3-pip python3-dev llvm iptables-persistent
-    sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++ g++-multilib lib32stdc++6-7-dbg libx32stdc++6-7-dbg make clang pkg-config runc cmake
-    
+
+```
+sudo apt install  git curl unattended-upgrades rkhunter fail2ban iperf htop iotop screen lynis nmap jq apt-transport-https ca-certificates gnupg-agent software-properties-common python3 python3-pip python3-dev llvm iptables-persistent
+sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++ g++-multilib lib32stdc++6-7-dbg libx32stdc++6-7-dbg make clang pkg-config runc cmake
+```
+
 # Install Rustup and tools
     
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -25,14 +28,14 @@
     
 # Move the files to common location
 
-    mkdir -p /usr/local/bin/casper/wasm
-    cd /usr/local/bin/casper
-    sudo cp -r ~/casper-node/target/wasm32-unknown-unknown/release/* /usr/local/bin/casper/wasm
+    mkdir -p /etc/casper/wasm
+    cd /etc/casper
+    sudo cp -r ~/casper-node/target/wasm32-unknown-unknown/release/* /etc/casper/wasm
     sudo curl -o chainspec.toml https://raw.githubusercontent.com/sacherjj/casper-node/b1b49cbbb2e0527161bbd360334142b0f4fb3661/resources/charlie/chainspec.toml
     sudo curl -o accounts.csv https://raw.githubusercontent.com/CasperLabs/casper-node/c6f40f6335006419abf5bf4f23c2fbcb9d96ad4a/resources/charlie/accounts.csv
     md5sum accounts.csv --> should return e094b414dfe5c13f7f98e81a00c82767  accounts.csv
     md5sum chainspec.toml --> should return 9a38711a047dd7bf1f32bf4e959e04da  chainspec.toml
-    sudo cp ~/casper-node/resources/local/config.toml /usr/local/bin/casper
+    sudo cp ~/casper-node/resources/local/config.toml /etc/casper
     
 # Create Keys
 
@@ -41,28 +44,29 @@
 
 # Create Config file
 
-    sudo nano /usr/local/bin/casper/config.toml
+    sudo nano /etc/casper/config.toml
     # edit the following lines to match
-    chainspec_config_path = '/usr/local/bin/casper/chainspec.toml'
+    chainspec_config_path = '/etc/casper/chainspec.toml'
     secret_key_path = '/home/<YOUR_USERNAME>/.client_keys/secret_key.pem'
     public_address = '<YOUR_IP>:0'
 
-# Edit the chainspec file
+# Edit chainspec.toml
 
-    sudo nano /usr/local/bin/casper/chainspec.toml
-    change the following lines 
-mint_installer_path = '/usr/local/bin/casper/wasm/mint_install.wasm'
-pos_installer_path = '/usr/local/bin/casper/wasm/pos_install.wasm'
-standard_payment_installer_path = '/usr/local/bin/casper/wasm/standard_payment_install.wasm'
-auction_installer_path = '/usr/local/bin/casper/wasm/auction_install.wasm'
-accounts_path = '/usr/local/bin/casper/accounts.csv'
+    sudo nano /etc/casper/chainspec.toml
+    change the following lines
+    
+        ```mint_installer_path = '/etc/casper/wasm/mint_install.wasm'
+        pos_installer_path = '/etc/casper/wasm/pos_install.wasm'
+        standard_payment_installer_path = '/etc/casper/wasm/standard_payment_install.wasm'
+        auction_installer_path = '/etc/casper/wasm/auction_install.wasm'
+        accounts_path = '/etc/casper/accounts.csv'```
 
 
 # Create symlinks to the binaries
 
-    sudo ln -s ~/casper-node/target/release/casper-node /usr/local/bin/
-    sudo ln -s ~/casper-node/target/release/casper-client /usr/local/bin/
-    sudo chown -R casper:casper /usr/local/bin/casper/
+    sudo ln -s ~/casper-node/target/release/casper-node /etc/
+    sudo ln -s ~/casper-node/target/release/casper-client /etc/
+    sudo chown -R casper:casper /etc/casper/
     # now we should be able to launch either binary with (casper-node or casper-client)
     
 # Create A Service to start the node
@@ -83,7 +87,7 @@ accounts_path = '/usr/local/bin/casper/accounts.csv'
     User=USERNAME
     Group=GROUPNAME
     Type=simple
-    ExecStart=/usr/local/bin/casper-node validator /usr/local/bin/casper/config.toml
+    ExecStart=/etc/casper-node validator /etc/casper/config.toml
 
     [Install]
     WantedBy=multi-user.target
@@ -95,19 +99,19 @@ accounts_path = '/usr/local/bin/casper/accounts.csv'
 - I run this in screen (sudo apt install screen) and output to a file
 ```
 screen
-env RUST_LOG=INFO casper-node validator /usr/local/bin/casper/config.toml & > casper.log
+env RUST_LOG=INFO casper-node validator /etc/casper/config.toml & > casper.log
 ```
  
 - Logs DEBUG output to your screen (warning its a lot of data)
 ```
 screen    
-env RUST_LOG=debug casper-node validator /usr/local/bin/casper/config.toml & 
+env RUST_LOG=debug casper-node validator /etc/casper/config.toml & 
 ``` 
 
 - For Less Detail & output to the console
 ```
-env RUST_LOG=INFO casper-node validator /usr/local/bin/casper/config.toml & 
+env RUST_LOG=INFO casper-node validator /etc/casper/config.toml & 
 ```
 
     # Or run it normally without specifying log information
-    casper-node validator /usr/local/bin/casper/config.toml &
+    casper-node validator /etc/casper/config.toml &
