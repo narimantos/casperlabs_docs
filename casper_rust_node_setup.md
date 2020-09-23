@@ -23,8 +23,10 @@ sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++
     make setup-rs
     make build-system-contracts -j
     cargo build -p casper-node --release
-    
+
+
 # Move the files to common location
+[Source](https://www.pathname.com/fhs/pub/fhs-2.3.html#USRLOCALLOCALHIERARCHY) <--- Correct path locations
 
     sudo mkdir -p /etc/casper/wasm
     cd /etc/casper
