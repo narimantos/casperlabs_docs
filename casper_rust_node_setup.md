@@ -28,8 +28,12 @@ sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++
 # Move the files to common location
 [Source](https://www.pathname.com/fhs/pub/fhs-2.3.html#USRLOCALLOCALHIERARCHY) <--- Correct path locations
 
-    sudo mkdir -p /usr/local/bin/casper
-    cd /usr/local/bin/casper
+    cd /home
+    sudo mkdir /usr/local/bin/casper
+    sudo cp -r /home/casper/casper-node/target/wasm32-unknown-unknown/ /usr/local/bin/casper/wasm
+    sudo cp casper-client* /usr/local/bin/casper
+    sudo cp casper-node* /usr/local/bin/casper
+    sudo cp libcasper* /usr/local/bin/casper
     sudo cp ~/casper-node/casper-node /usr/local/bin/casper
     sudo cp ~/casper-node/casper-client /usr/local/bin/casper
     sudo cp -r ~/casper-node/target/wasm32-unknown-unknown/release/* /usr/local/bin/casper/wasm
@@ -51,7 +55,7 @@ sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++
 
     sudo nano /usr/local/bin/casper/chainspec.toml
     
-- Change the following lines
+- Update the following lines 
 ```    
 mint_installer_path = '/usr/local/bin/casper/wasm/mint_install.wasm'
 pos_installer_path = '/usr/local/bin/casper/wasm/pos_install.wasm'
@@ -78,7 +82,7 @@ accounts_path = '/usr/local/bin/casper/accounts.csv'
     
 - Note: You should probably use a service account for this step 
 
-- I used root for initial config: TODO update how to do with service account
+- I used root for the initial config: **TODO** update how to do with service account
 - Paste the following
 ```
 [Unit]
