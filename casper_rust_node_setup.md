@@ -125,3 +125,9 @@ sudo cat /var/log/casper-node.log
 ```
 sudo cat /var/log/casper-node.err
 ```
+
+# If you change your confirguration
+
+- Clear Local State
+
+`sudo rm -rf /root/.local/share/casper-node`
