@@ -64,20 +64,22 @@ accounts_path = '/usr/local/bin/casper/accounts.csv'
     sudo ln -s ~/casper-node/target/release/casper-client /usr/local/bin/
     sudo chown -R casper:casper /usr/local/bin/casper/
     # now we should be able to launch either binary with (casper-node or casper-client)
+    
 # Create A Service to start the node
     
     sudo nano /etc/systemd/system/casper.service
     
     
-Paste the following
+I use the user account that I log in with to start the service to avoid permissions issues.
+Paste the following and edit the user/group
     ```    
     [Unit]
     Description=Prometheus Node Exporter Service
     After=network.target
 
     [Service]
-    User=casper
-    Group=casper
+    User=USERNAME
+    Group=GROUPNAME
     Type=simple
     ExecStart=/usr/local/bin/casper-node validator /usr/local/bin/casper/config.toml
 
@@ -88,13 +90,17 @@ Paste the following
 # Start the node
     
     You can run the node with debug level logging to verify it is working.
-    I run this in screen (sudo apt install screen)
-    
-    Console Logs output to your screen
-    env RUST_LOG=debug casper-node validator /usr/local/bin/casper/config.toml & > casper.log
-    
-    # For Less Detail
+    I run this in screen (sudo apt install screen) and output to a file
+    ```
+    screen
     env RUST_LOG=INFO casper-node validator /usr/local/bin/casper/config.toml & > casper.log
+    ```
     
-    # No Real Output
-    casper validator /usr/local/bin/casper/config.toml
+    # Logs output to your screen (warning its a lot of data)
+    env RUST_LOG=debug casper-node validator /usr/local/bin/casper/config.toml & 
+    
+    # For Less Detail ooutput to the console
+    env RUST_LOG=INFO casper-node validator /usr/local/bin/casper/config.toml & 
+    
+    # Or run it normally without specifying log information
+    casper-node validator /usr/local/bin/casper/config.toml &
