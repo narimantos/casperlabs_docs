@@ -78,7 +78,7 @@ accounts_path = '/etc/casper/accounts.csv'
 - Note: You should probably use a service account for this step 
 
 - I used root for initial config: TODO update how to do with service account
-- Paste the following and edit the user/group
+- Paste the following
 ```
 [Unit]
 Description=Casper Node Service
