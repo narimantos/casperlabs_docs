@@ -1,17 +1,8 @@
-# Create Account
-     
-- [Casper Clarity](https://clarity.casperlabs.io/) <--- You can create an account here
-     
 # Install required packages
     
     sudo apt install  git curl unattended-upgrades rkhunter fail2ban iperf htop iotop screen lynis nmap jq apt-transport-https ca-certificates gnupg-agent software-properties-common python3 python3-pip python3-dev llvm iptables-persistent
     sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++ g++-multilib lib32stdc++6-7-dbg libx32stdc++6-7-dbg make clang pkg-config runc cmake
-
-# IF using Ubuntu 18.04
-
-- You must upgrade cmake to at least v.3.16.3 [CMAKE](https://cmake.org/download/)
-
-
+    
 # Install Rustup and tools
     
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -39,6 +30,10 @@
     md5sum chainspec.toml --> should return 9a38711a047dd7bf1f32bf4e959e04da  chainspec.toml
     sudo cp ~/casper-node/resources/local/config.toml /usr/local/bin/casper
 
+# Create a service user account for casper
+
+    sudo useradd -rM casper
+    
 # Create Keys
 
     cd /home/casper/casper-node/client
@@ -67,9 +62,29 @@ accounts_path = '/usr/local/bin/casper/accounts.csv'
 
     sudo ln -s ~/casper-node/target/release/casper-node /usr/local/bin/
     sudo ln -s ~/casper-node/target/release/casper-client /usr/local/bin/
-    sudo chown -R <username>:<username> /usr/local/bin/casper/
-    # now both casper-node and casper-client are commands
+    sudo chown -R casper:casper /usr/local/bin/casper/
+    # now we should be able to launch either binary with (casper-node or casper-client)
+# Create A Service to start the node
     
+    sudo nano /etc/systemd/system/casper.service
+    
+    
+Paste the following
+    ```    
+    [Unit]
+    Description=Prometheus Node Exporter Service
+    After=network.target
+
+    [Service]
+    User=casper
+    Group=casper
+    Type=simple
+    ExecStart=/usr/local/bin/casper-node validator /usr/local/bin/casper/config.toml
+
+    [Install]
+    WantedBy=multi-user.target
+    ```
+
 # Start the node
     
     You can run the node with debug level logging to verify it is working.
