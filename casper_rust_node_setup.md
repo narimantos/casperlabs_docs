@@ -1,7 +1,7 @@
 # Requirements
 
 - Ubuntu 20.04
-- To use on Ubuntu 18.04 you MUST update cmake to at least 3.16.3-1ubuntu1 
+- To use on Ubuntu 18.04 you MUST update cmake to at least 3.16.3-1ubuntu1[Kitware/CMake](https://github.com/Kitware/CMake) 
 
 # Install required packages
 
