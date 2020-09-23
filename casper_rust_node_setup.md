@@ -61,8 +61,8 @@ accounts_path = '/etc/casper/accounts.csv'
 # Create symlinks to the binaries
 
     sudo chown -R casper:casper /etc/casper/
-    ln -s /etc/casper/casper-node /etc/
-    ln -s /etc/casper/casper-client /etc/
+    sudo ln -s /etc/casper/casper-node /etc/
+    sudo ln -s /etc/casper/casper-client /etc/
     # now we should be able to launch either binary with (casper-node or casper-client)
 
 # Create Keys
