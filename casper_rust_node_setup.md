@@ -1,3 +1,7 @@
+# Requirements
+
+- Ubuntu 20.04
+
 # Install required packages
     
     sudo apt install  git curl unattended-upgrades rkhunter fail2ban iperf htop iotop screen lynis nmap jq apt-transport-https ca-certificates gnupg-agent software-properties-common python3 python3-pip python3-dev llvm iptables-persistent
@@ -72,7 +76,7 @@ accounts_path = '/usr/local/bin/casper/accounts.csv'
     
 I use the user account that I log in with to start the service to avoid permissions issues.
 Paste the following and edit the user/group
-    ```    
+
     [Unit]
     Description=Prometheus Node Exporter Service
     After=network.target
@@ -85,22 +89,27 @@ Paste the following and edit the user/group
 
     [Install]
     WantedBy=multi-user.target
-    ```
+
 
 # Start the node
     
-    You can run the node with debug level logging to verify it is working.
-    I run this in screen (sudo apt install screen) and output to a file
-    ```
-    screen
-    env RUST_LOG=INFO casper-node validator /usr/local/bin/casper/config.toml & > casper.log
-    ```
-    
-    # Logs output to your screen (warning its a lot of data)
-    env RUST_LOG=debug casper-node validator /usr/local/bin/casper/config.toml & 
-    
-    # For Less Detail ooutput to the console
-    env RUST_LOG=INFO casper-node validator /usr/local/bin/casper/config.toml & 
-    
+- You can run the node with debug level INFO to verify it is working.
+- I run this in screen (sudo apt install screen) and output to a file
+```
+screen
+env RUST_LOG=INFO casper-node validator /usr/local/bin/casper/config.toml & > casper.log
+```
+ 
+- Logs DEBUG output to your screen (warning its a lot of data)
+```
+screen    
+env RUST_LOG=debug casper-node validator /usr/local/bin/casper/config.toml & 
+``` 
+
+- For Less Detail & output to the console
+```
+env RUST_LOG=INFO casper-node validator /usr/local/bin/casper/config.toml & 
+```
+
     # Or run it normally without specifying log information
     casper-node validator /usr/local/bin/casper/config.toml &
