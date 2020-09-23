@@ -79,7 +79,7 @@ accounts_path = '/etc/casper/accounts.csv'
 
 - I use the user account that I log in with to start the service to avoid permissions issues.
 - Paste the following and edit the user/group
-
+```
     [Unit]
     Description=Casper Node Service
     After=network.target
@@ -95,7 +95,7 @@ accounts_path = '/etc/casper/accounts.csv'
     StandardError=file:/var/log/casper-node.err
     [Install]
     WantedBy=multi-user.target
-
+```
 
 
 
