@@ -99,7 +99,7 @@ WantedBy=multi-user.target
 
 # Start the node
     
-- You can run the node with debug level INFO to verify it is working.
+- You can run the node with debug level *debug* to verify it is working.
 - I run this in screen (sudo apt install screen) and output to a file
 ```
 screen
