@@ -106,7 +106,7 @@ sudo systemctl status casper
 # Stopping the node
 
 ```
-sudo systemctl start casper
+sudo systemctl stop casper
 ```
 
 # Check the log file
