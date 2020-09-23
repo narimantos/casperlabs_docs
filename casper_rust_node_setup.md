@@ -69,7 +69,7 @@ sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++
     sudo chown -R casper:casper /etc/casper/
     # now we should be able to launch either binary with (casper-node or casper-client)
     
-# Create A Service to start the node
+# Create Service
     
     sudo nano /etc/systemd/system/casper.service
     
@@ -80,17 +80,22 @@ sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++
 - Paste the following and edit the user/group
 
     [Unit]
-    Description=Casper Node service
+    Description=Casper Node Service
     After=network.target
 
     [Service]
-    User=USERNAME
-    Group=GROUPNAME
+    User=root
+    Group=root
     Type=simple
-    ExecStart=/etc/casper-node validator /etc/casper/config.toml
-
+    # ExecStart=/etc/casper/casper-node validator /etc/casper/config.toml
+    # ExecStart=nohup /etc/casper/casper-node validator /etc/casper/config.toml
+    ExecStart=nohup env RUST_LOG=INFO /etc/casper/casper-node validator /etc/casper/config.toml
+    StandardOutput=file:/var/log/casper-node.log
+    StandardError=file:/var/log/casper-node.err
     [Install]
     WantedBy=multi-user.target
+
+
 
 
 # Start the node
