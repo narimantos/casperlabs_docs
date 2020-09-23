@@ -80,21 +80,21 @@ accounts_path = '/etc/casper/accounts.csv'
 - I use the user account that I log in with to start the service to avoid permissions issues.
 - Paste the following and edit the user/group
 ```
-    [Unit]
-    Description=Casper Node Service
-    After=network.target
+[Unit]
+Description=Casper Node Service
+After=network.target
 
-    [Service]
-    User=root
-    Group=root
-    Type=simple
-    # ExecStart=/etc/casper/casper-node validator /etc/casper/config.toml
-    # ExecStart=nohup /etc/casper/casper-node validator /etc/casper/config.toml
-    ExecStart=nohup env RUST_LOG=INFO /etc/casper/casper-node validator /etc/casper/config.toml
-    StandardOutput=file:/var/log/casper-node.log
-    StandardError=file:/var/log/casper-node.err
-    [Install]
-    WantedBy=multi-user.target
+[Service]
+User=root
+Group=root
+Type=simple
+# ExecStart=/etc/casper/casper-node validator /etc/casper/config.toml
+# ExecStart=nohup /etc/casper/casper-node validator /etc/casper/config.toml
+ExecStart=nohup env RUST_LOG=INFO /etc/casper/casper-node validator /etc/casper/config.toml
+StandardOutput=file:/var/log/casper-node.log
+StandardError=file:/var/log/casper-node.err
+[Install]
+WantedBy=multi-user.target
 ```
 
 
