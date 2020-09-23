@@ -77,7 +77,7 @@ accounts_path = '/etc/casper/accounts.csv'
     
 - Note: You should probably use a service account for this step 
 
-- I use the user account that I log in with to start the service to avoid permissions issues.
+- I used root for initial config: TODO update how to do with service account
 - Paste the following and edit the user/group
 ```
 [Unit]
