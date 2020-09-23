@@ -95,29 +95,28 @@ StandardError=file:/var/log/casper-node.err
 WantedBy=multi-user.target
 ```
 
+# Starting the node with systemd
 
-
-# Start the node
-    
-- You can run the node with log level *debug* to verify it is working. 
-- I run this in screen (sudo apt install screen) and output to a file
 ```
-screen
-env RUST_LOG=INFO casper-node validator /etc/casper/config.toml & > casper.log
-```
- 
-- Logs DEBUG output to your screen (warning its a lot of data)
-```
-screen    
-env RUST_LOG=debug casper-node validator /etc/casper/config.toml & 
-``` 
-
-- For Less Detail & output to the console
-```
-env RUST_LOG=INFO casper-node validator /etc/casper/config.toml & 
+sudo systemctl daemon-reload
+sudo systemctl start casper
+sudo systemctl status casper
 ```
 
-- Or run it normally without specifying log information
-````
-casper-node validator /etc/casper/config.toml &
-````
+# Stopping the node
+
+```
+sudo systemctl start casper
+```
+
+# Check the log file
+
+- Node Log
+```
+/var/log/casper-node.log
+```
+
+- Error Log
+```
+/var/log/casper-node.err
+```
