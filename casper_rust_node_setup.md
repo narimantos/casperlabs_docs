@@ -1,8 +1,17 @@
+# Create Account
+     
+- [Casper Clarity](https://clarity.casperlabs.io/) <--- You can create an account here
+     
 # Install required packages
     
     sudo apt install  git curl unattended-upgrades rkhunter fail2ban iperf htop iotop screen lynis nmap jq apt-transport-https ca-certificates gnupg-agent software-properties-common python3 python3-pip python3-dev llvm iptables-persistent
     sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++ g++-multilib lib32stdc++6-7-dbg libx32stdc++6-7-dbg make clang pkg-config runc cmake
-    
+
+# IF using Ubuntu 18.04
+
+- You must upgrade cmake to at least v.3.16.3 [CMAKE](https://cmake.org/download/)
+
+
 # Install Rustup and tools
     
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
