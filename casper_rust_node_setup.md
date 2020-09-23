@@ -33,10 +33,6 @@
     md5sum accounts.csv --> should return e094b414dfe5c13f7f98e81a00c82767  accounts.csv
     md5sum chainspec.toml --> should return 9a38711a047dd7bf1f32bf4e959e04da  chainspec.toml
     sudo cp ~/casper-node/resources/local/config.toml /usr/local/bin/casper
-
-# Create a service user account for casper
-
-    sudo useradd -rM casper
     
 # Create Keys
 
@@ -74,7 +70,9 @@ accounts_path = '/usr/local/bin/casper/accounts.csv'
     sudo nano /etc/systemd/system/casper.service
     
     
-I use the user account that I log in with to start the service to avoid permissions issues.
+- Note: You should probably use a service account for this step 
+
+- I use the user account that I log in with to start the service to avoid permissions issues.
 Paste the following and edit the user/group
 
     [Unit]
