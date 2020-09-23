@@ -53,14 +53,15 @@ sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++
 # Edit chainspec.toml
 
     sudo nano /etc/casper/chainspec.toml
-    change the following lines
     
-        ```mint_installer_path = '/etc/casper/wasm/mint_install.wasm'
-        pos_installer_path = '/etc/casper/wasm/pos_install.wasm'
-        standard_payment_installer_path = '/etc/casper/wasm/standard_payment_install.wasm'
-        auction_installer_path = '/etc/casper/wasm/auction_install.wasm'
-        accounts_path = '/etc/casper/accounts.csv'```
-
+- Change the following lines
+```    
+mint_installer_path = '/etc/casper/wasm/mint_install.wasm'
+pos_installer_path = '/etc/casper/wasm/pos_install.wasm'
+standard_payment_installer_path = '/etc/casper/wasm/standard_payment_install.wasm'
+auction_installer_path = '/etc/casper/wasm/auction_install.wasm'
+accounts_path = '/etc/casper/accounts.csv'
+```
 
 # Create symlinks to the binaries
 
@@ -118,5 +119,7 @@ env RUST_LOG=debug casper-node validator /etc/casper/config.toml &
 env RUST_LOG=INFO casper-node validator /etc/casper/config.toml & 
 ```
 
-    # Or run it normally without specifying log information
-    casper-node validator /etc/casper/config.toml &
+- Or run it normally without specifying log information
+````
+casper-node validator /etc/casper/config.toml &
+````
