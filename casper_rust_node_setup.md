@@ -10,18 +10,16 @@ sudo apt install  git curl unattended-upgrades rkhunter fail2ban iperf htop ioto
 sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++ g++-multilib lib32stdc++6-7-dbg libx32stdc++6-7-dbg make clang pkg-config runc cmake
 ```
 
-# Install Rustup and tools
+# Install Rustup
     
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     source $HOME/.cargo/env
-    rustup component add clippy-preview
-    rustup default nightly
-    source ~/.profile
     
 # Get the code and compile it
 
     git clone https://github.com/CasperLabs/casper-node.git
     cd casper-node
+    git checkout v0.1.1_0
     make setup-rs
     make build-system-contracts -j
     cargo build -p casper-node --release
@@ -70,7 +68,7 @@ accounts_path = '/etc/casper/accounts.csv'
     sudo chown -R casper:casper /etc/casper/
     # now we should be able to launch either binary with (casper-node or casper-client)
     
-# Create Service
+# Create the Service
     
     sudo nano /etc/systemd/system/casper.service
     
