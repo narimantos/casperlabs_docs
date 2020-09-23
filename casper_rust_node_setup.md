@@ -88,8 +88,6 @@ After=network.target
 User=root
 Group=root
 Type=simple
-# ExecStart=/etc/casper/casper-node validator /etc/casper/config.toml
-# ExecStart=nohup /etc/casper/casper-node validator /etc/casper/config.toml
 ExecStart=nohup env RUST_LOG=INFO /etc/casper/casper-node validator /etc/casper/config.toml
 StandardOutput=file:/var/log/casper-node.log
 StandardError=file:/var/log/casper-node.err
