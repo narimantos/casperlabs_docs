@@ -73,10 +73,10 @@ accounts_path = '/usr/local/bin/casper/accounts.csv'
 - Note: You should probably use a service account for this step 
 
 - I use the user account that I log in with to start the service to avoid permissions issues.
-Paste the following and edit the user/group
+- Paste the following and edit the user/group
 
     [Unit]
-    Description=Prometheus Node Exporter Service
+    Description=Casper Node service
     After=network.target
 
     [Service]
