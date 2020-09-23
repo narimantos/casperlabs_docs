@@ -26,7 +26,7 @@ sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++
     
 # Move the files to common location
 
-    mkdir -p /etc/casper/wasm
+    sudo mkdir -p /etc/casper/wasm
     cd /etc/casper
     sudo cp ~/casper-node/casper-node /etc/casper
     sudo cp ~/casper-node/casper-client /etc/casper
@@ -60,9 +60,9 @@ accounts_path = '/etc/casper/accounts.csv'
 
 # Create symlinks to the binaries
 
-    sudo ln -s ~/casper-node/target/release/casper-node /etc/
-    sudo ln -s ~/casper-node/target/release/casper-client /etc/
     sudo chown -R casper:casper /etc/casper/
+    ln -s /etc/casper/casper-node /etc/
+    ln -s /etc/casper/casper-client /etc/
     # now we should be able to launch either binary with (casper-node or casper-client)
 
 # Create Keys
