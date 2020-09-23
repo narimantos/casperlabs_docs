@@ -113,10 +113,10 @@ sudo systemctl start casper
 
 - Node Log
 ```
-sudo /var/log/casper-node.log
+sudo cat /var/log/casper-node.log
 ```
 
 - Error Log
 ```
-sudo /var/log/casper-node.err
+sudo cat /var/log/casper-node.err
 ```
