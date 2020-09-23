@@ -28,6 +28,8 @@ sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++
 
     mkdir -p /etc/casper/wasm
     cd /etc/casper
+    sudo cp ~/casper-node/casper-node /etc/casper
+    sudo cp ~/casper-node/casper-client /etc/casper
     sudo cp -r ~/casper-node/target/wasm32-unknown-unknown/release/* /etc/casper/wasm
     sudo curl -o chainspec.toml https://raw.githubusercontent.com/sacherjj/casper-node/b1b49cbbb2e0527161bbd360334142b0f4fb3661/resources/charlie/chainspec.toml
     sudo curl -o accounts.csv https://raw.githubusercontent.com/CasperLabs/casper-node/c6f40f6335006419abf5bf4f23c2fbcb9d96ad4a/resources/charlie/accounts.csv
@@ -35,11 +37,6 @@ sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++
     md5sum chainspec.toml --> should return 9a38711a047dd7bf1f32bf4e959e04da  chainspec.toml
     sudo cp ~/casper-node/resources/local/config.toml /etc/casper
     
-# Create Keys
-
-    cd /home/casper/casper-node/client
-    cargo run --release -- keygen $HOME/.client_keys
-
 # Create Config file
 
     sudo nano /etc/casper/config.toml
@@ -67,6 +64,10 @@ accounts_path = '/etc/casper/accounts.csv'
     sudo ln -s ~/casper-node/target/release/casper-client /etc/
     sudo chown -R casper:casper /etc/casper/
     # now we should be able to launch either binary with (casper-node or casper-client)
+
+# Create Keys
+
+    casper-client keygen $HOME/.client_keys
     
 # Create the Service
     
