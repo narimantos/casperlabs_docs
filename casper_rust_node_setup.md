@@ -250,29 +250,23 @@ etc	Host-specific system configuration for local binaries
     sudo chown -R casperadm:casperadm /usr/local/bin/c*
 
 # Create the Service
-    
+Not working. Do another time..
+
     sudo nano /etc/systemd/system/casper.service
-    
-    
-- Note: You should probably use a service account for this step 
+    [Unit]
+    Description=Casper Node Service
+    After=network.target
 
-- I used root for the initial config: **TODO** update how to do with service account
-- Paste the following
-```
-[Unit]
-Description=Casper Node Service
-After=network.target
+    [Service]
+    User=casper-service
+    Group=casper-service
+    Type=simple
+***    ExecStart=nohup env RUST_LOG=INFO casper-node validator /etc/casper/config.toml```
+    StandardOutput=file:/var/log/casper-node.log
+    StandardError=file:/var/log/casper-node.err 
 
-[Service]
-User=root
-Group=root
-Type=simple
-ExecStart=nohup env RUST_LOG=INFO /usr/local/bin/casper-node validator /usr/local/bin/casper/config.toml
-StandardOutput=file:/var/log/casper-node.log
-StandardError=file:/var/log/casper-node.err
-[Install]
-WantedBy=multi-user.target
-```
+    [Install]
+    WantedBy=multi-user.target    
 
 # Starting the node with systemd
 
@@ -304,4 +298,4 @@ sudo cat /var/log/casper-node.err
 
 - Clear Local State
 
-`sudo rm -rf /root/.local/share/casper-node`
+`sudo rm -rf /home/<USER>/.local/share/casper-node`
