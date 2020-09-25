@@ -1,6 +1,6 @@
 # Requirements
 
-- Ubuntu 20.04
+- Ubuntu 20.04 or
 - To use on Ubuntu 18.04 you MUST update cmake to at least 3.16.3 ----> Source for update [Kitware/CMake](https://github.com/Kitware/CMake) 
 
 # Sysctl settings
@@ -197,58 +197,58 @@ snapshot
     cd casper-node
     git checkout v0.1.2_0
     make setup-rs
-    make all
+    cargo build -p casper-node --release
+    cargo build -p casper-client --release
+
+    
 
 # Move the files to common location
 [Source](https://www.pathname.com/fhs/pub/fhs-2.3.html#USRLOCALLOCALHIERARCHY) <--- Correct path locations
 
-    cd /home
-    sudo mkdir /usr/local/bin/casper
-    sudo cp -r /home/casper/casper-node/target/wasm32-unknown-unknown/ /usr/local/bin/casper/wasm
-    sudo cp casper-client* /usr/local/bin/casper
-    sudo cp casper-node* /usr/local/bin/casper
-    sudo cp libcasper* /usr/local/bin/casper
-    sudo cp ~/casper-node/casper-node /usr/local/bin/casper
-    sudo cp ~/casper-node/casper-client /usr/local/bin/casper
-    sudo cp -r ~/casper-node/target/wasm32-unknown-unknown/release/* /usr/local/bin/casper/wasm
+bin	Local binaries
+etc	Host-specific system configuration for local binaries
+    
+    cd target
+    sudo mkdir /etc/casper
+    sudo mkdir /etc/casper/wasm
+    sudo cp -r wasm32-unknown-unknown/ /etc/casper/wasm
+    cd release
+    sudo cp casper-node* /usr/local/bin
+    sudo cp casper-client* /usr/local/bin
+    sudo cp libcasper* /usr/local/bin
+    cd /etc/casper
     sudo curl -o chainspec.toml https://raw.githubusercontent.com/sacherjj/casper-node/b1b49cbbb2e0527161bbd360334142b0f4fb3661/resources/charlie/chainspec.toml
     sudo curl -o accounts.csv https://raw.githubusercontent.com/CasperLabs/casper-node/c6f40f6335006419abf5bf4f23c2fbcb9d96ad4a/resources/charlie/accounts.csv
     md5sum accounts.csv --> should return e094b414dfe5c13f7f98e81a00c82767  accounts.csv
     md5sum chainspec.toml --> should return 9a38711a047dd7bf1f32bf4e959e04da  chainspec.toml
-    sudo cp ~/casper-node/resources/local/config.toml /usr/local/bin/casper
+    sudo cp ~/casper-node/resources/local/config.toml /etc/casper
     
 # Create Config file
 
-    sudo nano /usr/local/bin/casper/config.toml
+    sudo nano config.toml
     # edit the following lines to match
-    chainspec_config_path = '/usr/local/bin/casper/chainspec.toml'
+    chainspec_config_path = '/etc/chainspec.toml'
     secret_key_path = '/home/<YOUR_USERNAME>/.client_keys/secret_key.pem'
     public_address = '<YOUR_IP>:0'
+    NOTE add remote servers
 
 # Edit chainspec.toml
 
     sudo nano /usr/local/bin/casper/chainspec.toml
+    edit name = 'casper-charlie-testnet-5'
     
-- Update the following lines 
-```    
-mint_installer_path = '/usr/local/bin/casper/wasm/mint_install.wasm'
-pos_installer_path = '/usr/local/bin/casper/wasm/pos_install.wasm'
-standard_payment_installer_path = '/usr/local/bin/casper/wasm/standard_payment_install.wasm'
-auction_installer_path = '/usr/local/bin/casper/wasm/auction_install.wasm'
-accounts_path = '/usr/local/bin/casper/accounts.csv'
-```
-
-# Create symlinks to the binaries
-
-    sudo chown -R casper:casper /usr/local/bin/casper/
-    sudo ln -s /usr/local/bin/casper/casper-node /usr/local/bin/
-    sudo ln -s /usr/local/bin/casper/casper-client /usr/local/bin/
-    # now we should be able to launch either binary with (casper-node or casper-client)
-
 # Create Keys
-
-    casper-client keygen $HOME/.client_keys
     
+    cd home
+    casper-client keygen .client_keys/testaccount
+
+# Create Service Account and Grant Permissions
+
+    sudo adduser casper-service --shell=/bin/false --no-create-home --disabled-login --disabled-password
+    sudo usermod -G casper-service casperadm
+    sudo chown -R casperadm:casperadm /etc/casper
+    sudo chown -R casperadm:casperadm /usr/local/bin/c*
+
 # Create the Service
     
     sudo nano /etc/systemd/system/casper.service
