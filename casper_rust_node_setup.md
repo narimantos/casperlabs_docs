@@ -177,7 +177,7 @@ wget https://github.com/Kitware/CMake/releases/download/v3.18.3/cmake-3.18.3.tar
 tar -xf cmake-3.18.3-Linux-x86_64.tar.gz
 cd cmake-3.18.3-Linux-x86_64
 cd bin
-sudo cp cmake /etc/cmake
+sudo cp cmake /etc/
 rm -rf cmake-3.18.3-Linux-x86_64
 rm -rf cmake-3.18.3-Linux-x86_64.tar.gz
 ```
