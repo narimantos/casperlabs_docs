@@ -155,8 +155,7 @@ vm.nr_hugepages = 40
 # Install required packages
 
 ```
-sudo apt install  git curl unattended-upgrades rkhunter fail2ban iperf htop iotop screen lynis nmap jq apt-transport-https ca-certificates gnupg-agent software-properties-common python3 python3-pip python3-dev llvm iptables-persistent
-sudo apt install libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++ g++-multilib lib32stdc++6-7-dbg libx32stdc++6-7-dbg make clang pkg-config runc
+sudo apt install  git curl unattended-upgrades nmap jq apt-transport-https ca-certificates gnupg-agent software-properties-common python3 python3-pip python3-dev llvm iptables-persistent libclang-dev build-essential gcc g++ libssl-dev libudev-dev g++ g++-multilib lib32stdc++6-7-dbg libx32stdc++6-7-dbg make clang pkg-config runc
 ```
 # Setup IPTABLES
 ```
@@ -173,13 +172,11 @@ sudo iptables -P INPUT DROP
 # Install CMAKE
 
 ```,
-wget https://github.com/Kitware/CMake/releases/download/v3.18.3/cmake-3.18.3.tar.gz
-tar -xf cmake-3.18.3-Linux-x86_64.tar.gz
-cd cmake-3.18.3-Linux-x86_64
-cd bin
-sudo cp cmake /etc/
-rm -rf cmake-3.18.3-Linux-x86_64
-rm -rf cmake-3.18.3-Linux-x86_64.tar.gz
+wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc |
+    sudo apt-key add -
+sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+sudo apt-get update
+sudo apt-get install cmake
 ```
 
 # Install Rustup
@@ -197,6 +194,7 @@ snapshot
     cd casper-node
     git checkout v0.1.2_0
     make setup-rs
+    make build-system-contracts -j
     cargo build -p casper-node --release
     cargo build -p casper-client --release
 
