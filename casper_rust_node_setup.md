@@ -174,12 +174,12 @@ sudo iptables -P INPUT DROP
 
 ```,
 wget https://github.com/Kitware/CMake/releases/download/v3.18.3/cmake-3.18.3.tar.gz
-tar -xf cmake-3.18.3.tar.gz
-bootstrap and make 
+tar -xf cmake-3.18.3-Linux-x86_64.tar.gz
+cd cmake-3.18.3-Linux-x86_64
 cd bin
 sudo cp cmake /etc/cmake
-rm -rf cmake-3.18.3
-rm -rf cmake-3.18.3.tar.gz 
+rm -rf cmake-3.18.3-Linux-x86_64
+rm -rf cmake-3.18.3-Linux-x86_64.tar.gz
 ```
 
 # Install Rustup
