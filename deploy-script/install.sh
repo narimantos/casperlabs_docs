@@ -6,7 +6,7 @@ set -eu
 HOSTNAME=$(hostname)
 IP=$(hostname -I)
 SOURCE=https://github.com/CasperLabs/casper-node.git
-VERSION=tags/v0.1.2_0
+VERSION=tags/v0.1.3
 
 echo "* Running on ${HOSTNAME} ($IP)"
 
@@ -49,7 +49,7 @@ echo "* Compiling a release node"
 cargo build -p casper-node --release
 
 echo "* Copying built node to /usr/local/bin"
-# stop service in case it is running
+stop service in case it is running
 systemctl stop casper-node || true
 sleep 0.5
 cp -v target/release/casper-node /usr/local/bin
@@ -58,7 +58,7 @@ echo "* Dowloading config.toml"
 mkdir -p /etc/casper
 curl -o /etc/casper/chainspec.toml https://raw.githubusercontent.com/CasperLabs/casper-node/charlie-testnet/resources/charlie/chainspec.toml
 curl -o /etc/casper/accounts.csv https://raw.githubusercontent.com/CasperLabs/casper-node/charlie-testnet/resources/charlie/accounts.csv
-curl -o /etc/casper/config.toml https://github.com/CasperLabs/casper-node/blob/master/resources/charlie/config-example.toml
+curl -o /etc/casper/config.toml https://raw.github.com/CasperLabs/casper-node/blob/master/resources/charlie/config-example.toml
 
 echo "* Copying system contracts to /etc/casper/wasm as that is where the config points by default"
 mkdir -p /etc/casper/wasm
@@ -83,7 +83,7 @@ After=network-online.target
 Requires=network-online.target
 [Service]
 Environment=RUST_LOG=debug
-ExecStart=/usr/local/bin/casper-node validator /etc/casper-node/config.toml
+ExecStart=/usr/local/bin/casper-node validator /etc/casper/config.toml
 StandardOutput=file:/var/log/casper-node.log
 StandardError=file:/var/log/casper-node.err
 # RestartSec=5
@@ -102,7 +102,3 @@ echo "* Cleaning up my mess"
 rm -rf /src/casper-node
 
 echo "* Please manually configure /etc/casper-node/config.toml and verify md5 matches account.csv and chainspec.toml"
-
-
-
-
