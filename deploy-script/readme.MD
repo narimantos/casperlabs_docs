@@ -13,6 +13,8 @@ chmod +x install.sh
 ./install.sh
 ```
 
+If the script ends with the message "* Please manually configure /etc/casper-node/config.toml and /etc/casper-node/chainspec.toml" it was successful
+
 ### After completion 
 
 - Edit config.toml
