@@ -6,7 +6,7 @@ set -eu
 HOSTNAME=$(hostname)
 IP=$(hostname -I)
 SOURCE=https://github.com/CasperLabs/casper-node.git
-VERSION=tag/v0.1.3
+VERSION=tags/v0.1.2_0
 
 echo "* Running on ${HOSTNAME} ($IP)"
 
@@ -54,10 +54,10 @@ systemctl stop casper-node || true
 sleep 0.5
 cp -v target/release/casper-node /usr/local/bin
 
-echo "* Dowloading latest configuration files"
+echo "* Dowloading config.toml"
 mkdir -p /etc/casper
-# curl -o /etc/casper/chainspec.toml https://raw.githubusercontent.com/sacherjj/casper-node/b1b49cbbb2e0527161bbd360334142b0f4fb3661/resources/charlie/chainspec.toml
-# curl -o /etc/casper/accounts.csv https://raw.githubusercontent.com/CasperLabs/casper-node/c6f40f6335006419abf5bf4f23c2fbcb9d96ad4a/resources/charlie/accounts.csv
+curl -o /etc/casper/chainspec.toml https://raw.githubusercontent.com/CasperLabs/casper-node/charlie-testnet/resources/charlie/chainspec.toml
+curl -o /etc/casper/accounts.csv https://raw.githubusercontent.com/CasperLabs/casper-node/charlie-testnet/resources/charlie/accounts.csv
 curl -o /etc/casper/config.toml https://github.com/CasperLabs/casper-node/blob/master/resources/charlie/config-example.toml
 
 echo "* Copying system contracts to /etc/casper/wasm as that is where the config points by default"
@@ -101,7 +101,7 @@ systemctl daemon-reload
 echo "* Cleaning up my mess"
 rm -rf /src/casper-node
 
-echo "* Please manually configure /etc/casper/config.toml and download accounts.csv / chainspec.toml to /etc/casper"
+echo "* Please manually configure /etc/casper-node/config.toml and verify md5 matches account.csv and chainspec.toml"
 
 
 
