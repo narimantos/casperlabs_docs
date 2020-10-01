@@ -101,7 +101,7 @@ systemctl daemon-reload
 echo "* Cleaning up my mess"
 rm -rf /src/casper-node
 
-echo "* Please manually configure /etc/casper-node/config.toml and download accounts.csv / chainspec.toml to /etc/casper"
+echo "* Please manually configure /etc/casper/config.toml and download accounts.csv / chainspec.toml to /etc/casper"
 
 
 
