@@ -15,9 +15,10 @@ chmod +x install.sh
 
 If the script ends with the message "* Please manually configure /etc/casper-node/config.toml and /etc/casper-node/chainspec.toml" it was successful
 
-### After completion 
+# After completion 
 
-- Edit config.toml
+
+### Edit config.toml
 
 - Verify the path to chainspec.toml is like this
 ```
@@ -35,4 +36,23 @@ secret_key_path = '/etc/casper/validator_keys/secret_key.pem'
 public_address = '<IP ADDRESS>:0'
 ```
 example  ```public_address = '100.100.100.1:0'```
-  
+
+
+# Use systemctl to control the Validator
+```
+sudo systemctl enable casper-node
+sudo systemctl stop casper-node
+sudo systemctl start casper-node
+```
+
+# Logs
+
+- Log File
+```
+cat /var/log/casper-node.log
+```
+
+- Error Logs
+```
+cat /var/log/casper-node.err
+```
