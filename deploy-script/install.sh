@@ -6,7 +6,7 @@ set -eu
 HOSTNAME=$(hostname)
 IP=$(hostname -I)
 SOURCE=https://github.com/CasperLabs/casper-node.git
-VERSION=tags/v0.1.2_0
+VERSION=tag/v0.1.3
 
 echo "* Running on ${HOSTNAME} ($IP)"
 
