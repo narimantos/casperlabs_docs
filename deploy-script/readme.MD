@@ -1,6 +1,7 @@
 # Deploy Script Instructions
 
-- This script should be run as ROOT
+- This script should be run as ROOT.
+- Only tested on new ubuntu install if using ubunto 20.04 the cmake update is not needed
 If you are not logged in with root you can switch using 
 ```
 sudo su
@@ -13,7 +14,6 @@ chmod +x install.sh
 ./install.sh
 ```
 
-If the script ends with the message "* Please manually configure /etc/casper-node/config.toml and /etc/casper-node/chainspec.toml" it was successful
 
 # After completion 
 
